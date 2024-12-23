@@ -1,0 +1,72 @@
+class Library:
+    def __init__(self):
+        self.books = []  
+        self.borrowed_books = {}  
+
+    def add_book(self, book_title):
+     
+        self.books.append(book_title)
+        print(f'"{book_title}" has been added to the library.')
+
+    def display_books(self):
+
+        if not self.books:
+            print("No books are currently available in the library.")
+        else:
+            print("Available Books:")
+            for book in self.books:
+                print(f"- {book}")
+
+    def borrow_book(self, book_title, borrower_name):
+
+        if book_title in self.books:
+            self.books.remove(book_title)
+            self.borrowed_books[book_title] = borrower_name
+            print(f'"{book_title}" has been borrowed by {borrower_name}.')
+        elif book_title in self.borrowed_books:
+            print(f'Sorry, "{book_title}" is currently borrowed by {self.borrowed_books[book_title]}.')
+        else:
+            print(f'Sorry, "{book_title}" is not in the library.')
+
+    def return_book(self, book_title):
+
+        if book_title in self.borrowed_books:
+            borrower_name = self.borrowed_books.pop(book_title)
+            self.books.append(book_title)
+            print(f'"{book_title}" has been returned by {borrower_name}.')
+        else:
+            print(f'"{book_title}" was not borrowed from the library.')
+
+def main():
+    library = Library()
+
+    while True:
+        print("\nLibrary Management System")
+        print("1. Add Book")
+        print("2. View All Books")
+        print("3. Borrow Book")
+        print("4. Return Book")
+        print("5. Exit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == '1':
+            book_title = input("Enter the book title to add: ")
+            library.add_book(book_title)
+        elif choice == '2':
+            library.display_books()
+        elif choice == '3':
+            book_title = input("Enter the book title to borrow: ")
+            borrower_name = input("Enter your name: ")
+            library.borrow_book(book_title, borrower_name)
+        elif choice == '4':
+            book_title = input("Enter the book title to return: ")
+            library.return_book(book_title)
+        elif choice == '5':
+            print("Thank you for using the Library Management System. Goodbye!")
+            break
+        else:
+            print("Invalid choice! Please try again.")
+
+if __name__ == "__main__":
+    main()
